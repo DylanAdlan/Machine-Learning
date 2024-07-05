@@ -1,3 +1,4 @@
 
-# class range: # no parent class and no return then it'll print out address location
-#     pass
+except ValueError:
+    # when the error occur we must do
+    print("Principle amount must be in Integer")
