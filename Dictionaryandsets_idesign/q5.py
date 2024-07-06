@@ -16,21 +16,33 @@ Sample Input and Output 1:
 
 """
 
-array = int(input("enter size of number:"))
+""" 
+1. input berapa element, list of numbers and position 
+4. list of number convert to int 
+5. set and sort them out in ascending order (sort jdi list balik)
+6. nk calculate sum of numbers ikut position then append in a new list
+7. 
+"""
 
-numbers = input().split()
+def generate_pin_number(num_elements, elements_str, k):
 
-set_numbers = set(numbers)
+    elements = list(map(int, elements_str.split()))
+    #print(elements)
+    
+    unique_element = sorted(set(elements))
 
-list_number = []
-for i in set_numbers:
-    list_number.append(i)
+    # print(unique_element)
 
-print(list_number)
+    pin_number = []
+    length = len(unique_element)
+    i = 0
 
-size = int(input())
+    while i < length:
+        totalnum = sum(unique_element[i:i+k])
 
-for length in len(list_number):
     
 
-
+num_elements = 9
+elements_str = input()
+k = int(input())
+generate_pin_number(num_elements, elements_str, k)
