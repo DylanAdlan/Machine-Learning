@@ -111,7 +111,7 @@ def createTitle(filename):
 # ADD PRODUCT
 def addProduct(filename):
     try:
-        product = keyboardInput(str, "Product: ", "Product must be ")
+        product = keyboardInput(str, "Product: ", "Product must be in string")
         quantity = keyboardInput(int, "Quantity:", "Quantity must be in integer" ) #int
         price = keyboardInput(float, "Price:", "Price must be in float" ) #float
         with open(filename, "at") as filehandler:

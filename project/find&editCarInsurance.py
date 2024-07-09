@@ -18,7 +18,6 @@ def keyboardInput(datatype, caption, errorMessage, defaultValue = None):
         else:
             isInvalid = False
         return value
-
         
     
 def printCar(carfile, carInsurancefile):

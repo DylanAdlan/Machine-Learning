@@ -52,3 +52,6 @@ def write_salary_data_to_csv():
 
 # Call the function to execute the program
 write_salary_data_to_csv()
+
+
+

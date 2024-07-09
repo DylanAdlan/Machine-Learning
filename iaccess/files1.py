@@ -34,6 +34,27 @@ def count_char(file_path):
 file = "frequencyFile.txt"
 count_char(file)
 
+# syu method
+
+def charcount():
+    with open("frequencyFile.txt", "rt") as file:
+        lines = file.read().lower()
+        words = lines.split()
+
+        count = {}
+        for i in words:
+            if i in count:
+                count[i] +=1
+            else:
+                count[i] = 1
+
+        for i in count:
+            print(f"{count[0]}:{count[1]}")
+
+
+charcount()
+
+
 
 
 
