@@ -25,3 +25,4 @@ Date | Car Plate | Car Claim Amount(RM) | Driver ID | Driver Claim Amount(RM) | 
  2024-07-04 |  AB 123 C  | 3000 |  DR004  | 0 | 3000
  2024-07-04 |  AB 123 C  | 3000 |  DR004  | 0 | 3000
  2024-07-02 |  WS 345  | 0 |  DR002  | 2500 | 2500
+ 2024-07-01 |  WC 405L  | 3000 |  DR001  | 3000 | 6000

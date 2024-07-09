@@ -58,3 +58,40 @@ class RunTimeErrorwithcode(TypeError):
 
 err = RunTimeErrorwithcode("OUCH, Whats happening", 500)
 print(err.__doc__) # print out message dalam """ """
+
+###################################################################################################################################
+
+numlist = [2,3,1,5,6,7,1]
+print(numlist)
+
+#fill your code
+
+class CustomError(Exception):
+    pass
+
+    # def __init__(self, message = "Index Value out of range")
+    # self.message = message
+    # super.__init__(self.message)
+
+try:
+    n = int(input("Enter n\n"))
+
+    if n > len(numlist):
+        raise CustomError("Index Value out of range")
+    
+    sum = 0
+    for num in numlist[:n]:
+        sum +=num
+
+    print("Sum = ", sum)
+    
+except CustomError as e:
+    print(e)
+
+
+
+
+		
+		
+
+

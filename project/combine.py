@@ -1,32 +1,31 @@
 import time
+from datetime import datetime
 
-
-def keyboardInput(datatype, caption, errorMessage, defaultValue = None):
+def keyboardInput(datatype, caption, errorMessage,defaultValue = None):
     value = None
     isInvalid = True
-    while(isInvalid):
+    while (isInvalid):
         try:
             if defaultValue == None:
-                # take caption as parameter sbb kita ade byk input from user
                 value = datatype(input(caption))
             else:
                 value = input(caption)
-                if(value.strip() == ""):
+                if value.strip()=="":
                     value = defaultValue
                 else:
                     value = datatype(value)
         except:
             print(errorMessage)
         else:
-            isInvalid = False
-
+            isInvalid = False   
     return value
 
 def doMenu (carfile,driverfile,carinsurancefile,driverinsurancefile,bookingfile, claiminsurancefile):
     choice = -1
+    
     while choice != 0:
-        print("      Welcome to AEA Cars!!\n")
-        print("*********************************")
+        print("\n    Welcome to AEA Cars!!\n")
+        print("*"*34)
         print("          Main Menu              ")
         print("---------------------------------")
         print("|  0 - Exit                     |")
@@ -34,6 +33,7 @@ def doMenu (carfile,driverfile,carinsurancefile,driverinsurancefile,bookingfile,
         print("|  2 - Create Driver Insurance  |")
         print("|  3 - Claim Insurance          |")
         print("|  4 - Print Receipt            |")
+        print("|  5 - Department Report        |")
         print("---------------------------------")
         choice = keyboardInput(int, "Enter your choice: ", "Invalid choice")
         print("")
@@ -47,13 +47,17 @@ def doMenu (carfile,driverfile,carinsurancefile,driverinsurancefile,bookingfile,
             chooseBokingLine(bookingfile,carinsurancefile,driverinsurancefile, claiminsurancefile)            
         elif choice == 4:
             printResit(claiminsurancefile)
+        elif choice == 5:
+            reportCompany(carinsurancefile, driverinsurancefile, claiminsurancefile)
         
 def printCar(carfile, carInsurancefile):
     try:
         lines =None
         with open(carfile, "rt") as filehandler:
             lines = filehandler.readlines()
+
         for index, line in enumerate(lines):
+            
             carPlate, make, model, year, vin, mileage, expiry_date, status = line.strip().split(" | ")# strip method remove the last \n (new line) & remove spaces
             if (index == 0):
                 print(f"{"No.":<4}{carPlate:<12}{make:<12}{model:<9}{year:<5}{vin:<19}\
@@ -66,14 +70,15 @@ def printCar(carfile, carInsurancefile):
 
         datas = []
         for line in lines:
-            # next(filehandler)
             # print(line)
             datas.append(line.strip().split(" | "))
 
+        
         index = keyboardInput(int, "Enter a number:", "Number must be in integer")
-        while index == 0:
-            print("Invalid number")
-            index = keyboardInput(int,"Plesase insert line number again: ", "Number must be integer and not zero")
+        while index==0:
+            print("Invalid!")
+            index = keyboardInput(int, "Enter a number:", "Number must be in integer")
+
         else:
             carPlate, make, model, year, vin, mileage, expiry_date, status = datas[index]
 
@@ -86,11 +91,9 @@ def printCar(carfile, carInsurancefile):
                 confirm = keyboardInput(str, "\nDo you want to renew this car insurance (y/n) ?", "Confirm must be in String")
                 if confirm == "y":
                     findCarInsurance(carInsurancefile, carPlate, carfile)
-        
 
     except Exception as e: 
         print("Something went wrong when we print the products:", e)
-
 
 def findCarInsurance(carinsurancefile, carplate, carfile):
     carPlate = carplate.replace(" ","")
@@ -168,13 +171,13 @@ def updateCarfile(carfile, carinsurancefile, carplate):
         with open(carfile, "wt") as filehandler:
             filehandler.writelines(newlines)
 
+        print("\nThe car insurance successfully renewed.")
+
 
 
     except Exception as e:
         print("Something went wrong when we edit the product:", e)
 
-
-   
 def printDriver(driverfile, driverInsurancefile):
     try:
         lines =None
@@ -196,24 +199,23 @@ def printDriver(driverfile, driverInsurancefile):
         for line in lines:
             # print(line)
             datas.append(line.strip().split(" | "))
-
+        
         index = keyboardInput(int, "Enter a number: ", "Number must be in integer")
-        while index == 0:
-            print("Invalid number")
-            index = keyboardInput(int,"Plesase insert line number again: ", "Number must be integer and not zero")
-        else:
-            driverId, drivername, driverAge, gender, license, driverExpiredate, driverstatus = datas[index]
+        while index==0:
+            print("Invalid!")
+            index  =keyboardInput(int, "Enter a number:", "Number must be in integer")
+        driverId, drivername, driverAge, gender, license, driverExpiredate, driverstatus = datas[index]
 
-            print(f"\nDriver ID: {driverId}\nName: {drivername}\nAge: {driverAge}\nGender: {gender}\niLicense number: {license}\nInsurance expired date: {driverExpiredate}\
-    \nInsurance status: {driverstatus}")
-            
-            if driverstatus.strip() == "Active":
-                print("\nThe insurance has been active")
-            else:
-                print("\nThe insurance has been expired")
-                confirm = keyboardInput(str, "\nDo you want to renew this driver insurance (y/n) ?", "Confirm must be in String")
-                if confirm == "y":
-                    findDriverInsurance(driverInsurancefile, driverId, driverfile)
+        print(f"\nDriver ID: {driverId}\nName: {drivername}\nAge: {driverAge}\nGender: {gender}\niLicense number: {license}\nInsurance expired date: {driverExpiredate}\
+\nInsurance status: {driverstatus}")
+        
+        if driverstatus.strip() == "Active":
+            print("\nThe insurance has been active")
+        else:
+            print("\nThe insurance has been expired")
+            confirm = keyboardInput(str, "\nDo you want to renew this driver insurance (y/n) ?", "Confirm must be in String")
+            if confirm == "y":
+                findDriverInsurance(driverInsurancefile, driverId, driverfile)
 
     except Exception as e: 
         print("Something went wrong when we print the products:", e)
@@ -296,32 +298,12 @@ def updateDriverfile(driverfile, driverInsurancefile, driverID):
         with open(driverfile, "wt") as filehandler:
             filehandler.writelines(newlines)
 
-
+        print("\nThe driver insurance successfully renewed.")
+        
 
     except Exception as e:
         print("Something went wrong when we edit the product:", e)
 
-# def createDriverInsurance(driverfile, driverinsurancefile):
-#     try:
-#         lines =None
-#         with open(driverfile, "rt") as filehandler:
-#             # read all lines 
-#             lines = filehandler.readlines()
-#         for index, line in enumerate(lines):
-#             driver_id, driver_name, driver_age, driver_gender, license, insurance_company, policy_number,\
-#             coverage_type, premium_amount, status, expiry_date, claim_amount = line.strip().split("|")# strip method remove the last \n (new line) & remove spaces
-#             if (index == 0):
-#                 print(f"{"No.":<4}{driver_id:<6}{driver_name:<16}{driver_age:<5}{driver_gender:<8}{license:<18}{insurance_company:<19}\
-# {policy_number:<14}{coverage_type:<15}{premium_amount:<16}{status:<10}\
-# {expiry_date:<13}{claim_amount:<10}")
-#                 print("=" * 159)
-#             else:
-#                 print(f"{index:<4}{driver_id:<6}{driver_name:<16}{driver_age:<5}{driver_gender:<8}{license:<18}{insurance_company:<19}\
-# {policy_number:<14}{coverage_type:<15}{premium_amount:<16}{status:<10}\
-# {expiry_date:<13}{claim_amount:<10}")
-#     except Exception as e: 
-#         print("Something went wrong when we print the products:", e)
-    # pass
 
 def chooseBokingLine(bookingfile,carinsurancefile,driverinsurancefile, claiminsurancefile):
     verify = True
@@ -344,6 +326,9 @@ def chooseBokingLine(bookingfile,carinsurancefile,driverinsurancefile, claiminsu
             #print(data)
 
             index = keyboardInput(int,"Plesase insert line number: ", "Number must be integer")
+            while index==0:
+                print("Invalid!")
+                index = keyboardInput(int,"Plesase insert line number: ", "Number must be in integer")
             print("\nPlese check the detail carefully...")
             BookingID, CustomerID, CarPlate, DriverID, DriverName, BookingDate = data[index]
             print(f"\nBooking ID: {BookingID}\nCustomer ID: {CustomerID}\nPlate No: {CarPlate}\nDriver ID: {DriverID}\nName: {DriverName}\nBooking Date: {BookingDate}")
@@ -428,32 +413,166 @@ def totalClaimInsurance (claimInsurancefile,BookingDate, CarPlate, carClaim, Dri
     except Exception as e:
         print("Something went wrong when we write to the file", e)
 
-
 def printResit (claimInsurancefile):
     lines = None
+    print("*"*120)
+    net_claimed = 0.0
     #claimInsurancefile = "ClaimInsurance.txt"
     try:
+        with open(carinsurancefile,"rt") as file:
+            line = file.readlines()
+
+            print(" "*47,"\033[1mSUMMARY INSURANCE CLAIMED\033[0m"," "*47)
+            print("\n"," "*45,"AEA CAR RENTAL SERVICE SDN BHD"," "*45)
+            print(" "*42,"123,AEA STREET, EFG CITY,45689 HIJL"," "*42)
+            print(" "*52,"(123)- 4567 890"," "*52)
+            print(" "*51,"\033[94minfo@AEARENTAL.com\033[0m"," "*51)
+            print("-"*120)
+
         with open(claimInsurancefile, 'rt') as filehandler:
+            
             lines = filehandler.readlines()
         
-        print("\nInvoice Summary:\n")
+        print("\nInvoices Summary:\n")
         for index,line in enumerate(lines):
             parts = line.strip().split("|")
             if len(parts) == 6:
                 BookingDate, CarPlate, carClaim, DriverID, driverClaim, totalClaim = parts
                 if(index == 0):
-                    print(f"{"No:":5}{BookingDate:15}{CarPlate:>10}{carClaim:>25}{DriverID:>12}{driverClaim:>25}{totalClaim:>20}")
-                    print("=" * 113)
+                    print(f"{"No:":5}{BookingDate:>11}{CarPlate:>15}{carClaim:>25}{DriverID:>12}{driverClaim:>25}{totalClaim:>2}")
+                    print("=" * 116)
                 else:
                     CarPlate = CarPlate.strip()
-                    print(f"{index:<5}{BookingDate:15}{CarPlate:>10}{carClaim:>25}{DriverID:>12}{driverClaim:>25}{totalClaim:>20}")
-            else:
-                print(f"Skipping line {index+1} due to incorrect format: {line.strip()}")
-        print(" " * 85, "Total", "RMXXXXXX")
+                    print(f"{index:<5}{BookingDate:15}{CarPlate:>10}{carClaim:>25}{DriverID:>14}{driverClaim:>23}{totalClaim:>22}")
+                    #print("-"*116)
+        
+        for line in lines[1:]:
+            line = line.strip().split("|")
+            net_claimed += float(line[5].strip())
+        print(" "*77,f"Net total claimed:     \033[92mRM {net_claimed:,.2f}\033[0m")
+
         print("")
         time.sleep(2)
     except Exception as e:
         print("Something went wrong when we read from the file", e)
+#______________________________________________________________________________#
+def reportCompany (carinsurancefile, driverinsurancefile, claiminsurancefile):
+    print('-'*20, "REPORT ON INSURANCE DEPARTMENT",'-'*20)
+    try:
+        year = keyboardInput(int,"Report Year: ","Please input Year in YYYY format")
+        while len(str(year)) != 4 :
+            print("Invalid!")
+            year = keyboardInput(int,"Report Year: ","Please input Year in YYYY format")
+        #to get the report on the month that user want
+        targetDate = datetime(year,1,1)
+        totalCarsWithInsurance = 0
+        totalActiveCars = 0
+        totalInactiveCar = 0
+        totalDriverWithInsurance = 0
+        totalActiveDriver = 0
+        totalInactiveDriver = 0
+        totalRenewInsuranceCar = 0
+        totalClaims = 0
+        while year ==2024:
+            with open(carinsurancefile,'rt') as file:
+                next(file)
+                for line in file:
+                    data = line.strip().split("|")
+                    if len(data)<12:
+                        continue
+
+                    expiry_date_str = data[-2].strip()
+                    status = data[-3].strip()
+
+                    try: 
+                        expiry_date= datetime.strptime(expiry_date_str, '%Y-%m-%d')
+
+                    except:
+                        print(f"Invalid date format encountered:{expiry_date_str}. Skip line")
+                        continue
+                    if expiry_date.year<=year or expiry_date.year>=year:
+                        totalCarsWithInsurance += 1
+                        if status == 'Active':
+                            totalActiveCars += 1
+                        elif status == 'Inactive':
+                            totalInactiveCar += 1
+                    else:
+                        print (f"The report for Year {year} is not available.")
+                        break
+            
+            with open(driverinsurancefile,'rt') as file:
+                next(file)
+                for line in file:
+                    data = line.strip().split("|")
+                    if len(data)<12:
+                        continue
+
+                    expiry_date_str = data[-2].strip()
+                    status = data[-3].strip()
+                    try:
+                        expiry_date = datetime.strptime(expiry_date_str, '%Y-%m-%d')
+
+                    except:
+                        print(f"Invalide date format encountered:{expiry_date_str}. Skip line")
+                        continue
+                    if expiry_date.year<=year or expiry_date.year>=year:
+                        totalDriverWithInsurance += 1
+                        if status == 'Active':
+                            totalActiveDriver += 1
+                        elif status == 'Inactive':
+                            totalInactiveDriver += 1
+                    else:
+                        print(f"The report for year {year} is not available.")
+                        break
+            totalRenewInsuranceCar = totalInactiveCar + totalInactiveDriver
+            with open(claiminsurancefile,'rt') as file:
+                next(file)
+                for line in file:
+                    data = line.strip().split("|")
+                    if len(data)<6:
+                        continue
+
+                    booking_date_str = data[0].strip()
+                    try:
+                        booking_date = datetime.strptime(booking_date_str, '%Y-%m-%d')
+
+                    except ValueError:
+                        print(f"Invalid date format encountered: {booking_date_str}. Skip line.")
+                        continue
+
+                    if booking_date.year==year:
+                        totalClaims += 1
+
+            #display
+            print("="*72)
+            print(f"\nReport for {targetDate.strftime('%B %Y')}")
+
+            print(f"\n1.   Total cars with insurance(car(s)):"," "*31,f"{totalCarsWithInsurance}")
+            print(f"     - Cars with Active insurance(car(s)):"," "*28,f"{totalActiveCars}")
+            print(f"     - Cars with Inactive insurance(car(s)):"," "*26,f"{totalInactiveCar}")
+            print(f"2.   Total drivers with insurance(driver(s)):"," "*25,f"{totalDriverWithInsurance}")
+            print(f"     - Drivers with Active insurance(driver(s)):"," "*22,f"{totalActiveDriver}")
+            print(f"     - Drivers with Inactive insurance(driver(s)):"," "*20,f"{totalInactiveDriver}")
+            print(f"3.   Total insurance that need to renew its insurance(insurance(s)):"," "*2,f"{totalRenewInsuranceCar}")
+            print(f"4.   Total claims that has been made(claims):"," "*25,f"{totalClaims}")
+
+            time.sleep(2)
+            break
+        else:
+            print("No record")
+
+    except FileNotFoundError:
+        print("Error: One or more insurance file not found")
+
+    except Exception as e:
+        print(f"An error occured: {e}")
+
+    except FileNotFoundError:
+        print("Error: One or more insurance file not found")
+
+    except Exception as e:
+        print(f"An error occured: {e}")
+
 
 carfile = "Car.txt"
 driverfile = "Driver.txt"
