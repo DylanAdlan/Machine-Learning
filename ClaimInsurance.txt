@@ -32,3 +32,4 @@ Date | Car Plate | Car Claim Amount(RM) | Driver ID | Driver Claim Amount(RM) | 
  2024-07-01 |  WC 405L  | 0 |  DR001  | 3000 | 3000
  2024-07-01 |  WC 405L  | 0 |  DR001  | 3000 | 3000
  2024-07-01 |  WC 405L  | 0 |  DR001  | 3000 | 3000
+ 2024-07-02 |  WS 345  | 1000 |  DR002  | 2500 | 3500
