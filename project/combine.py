@@ -24,17 +24,17 @@ def doMenu (carfile,driverfile,carinsurancefile,driverinsurancefile,bookingfile,
     choice = -1
     
     while choice != 0:
-        print("\n    Welcome to AEA Cars!!\n")
-        print("*"*34)
-        print("          Main Menu              ")
-        print("---------------------------------")
-        print("|  0 - Exit                     |")
-        print("|  1 - Create Car Insurance     |")
-        print("|  2 - Create Driver Insurance  |")
-        print("|  3 - Claim Insurance          |")
-        print("|  4 - Print Receipt            |")
-        print("|  5 - Department Report        |")
-        print("---------------------------------")
+        print("\n"," "*49,"Welcome to AEA Cars!!"," "*49,"\n")
+        print("*"*120)
+        print(" "*55,"\033[1mMain Menu\033[0m"," "*55)
+        print("-"*120)
+        print(" "*41,"|  \033[31m0 - Exit\033[0m                         |")
+        print(" "*41,"|  \033[96m1 - Create Car Insurance\033[0m         |")
+        print(" "*41,"|  \033[96m2 - Create Driver Insurance\033[0m      |")
+        print(" "*41,"|  \033[96m3 - Claim Insurance\033[0m              |")
+        print(" "*41,"|  \033[96m4 - Print Receipt\033[0m                |")
+        print(" "*41,"|  \033[96m5 - Department Report\033[0m            |")
+        print("-"*120)
         choice = keyboardInput(int, "Enter your choice: ", "Invalid choice")
         print("")
         if choice==0:
@@ -52,6 +52,8 @@ def doMenu (carfile,driverfile,carinsurancefile,driverinsurancefile,bookingfile,
         
 def printCar(carfile, carInsurancefile):
     try:
+        print("-"*120)
+        print(" "*53,"\033[1mCAR INSURANCE\033[0m\n"," "*53)
         lines =None
         with open(carfile, "rt") as filehandler:
             lines = filehandler.readlines()
@@ -60,12 +62,12 @@ def printCar(carfile, carInsurancefile):
             
             carPlate, make, model, year, vin, mileage, expiry_date, status = line.strip().split(" | ")# strip method remove the last \n (new line) & remove spaces
             if (index == 0):
-                print(f"{"No.":<4}{carPlate:<12}{make:<12}{model:<9}{year:<5}{vin:<19}\
-{mileage:<10}{vin:<20}{expiry_date:<25}{status:<10}")
-                print("=" * 140)
+                print(f"{"No.":>4}{carPlate:>12}{make:>12}{model:>9}{year:>5}{vin:>19}\
+{mileage:>8}{vin:>18}{expiry_date:>23}{status:>9}")
+                print("=" * 120)
             else:
-                print(f"{index:<4}{carPlate:<12}{make:<12}{model:<9}{year:<5}{vin:<19}\
-{mileage:<10}{vin:<20}{expiry_date:<25}{status:<10}")
+                print(f"{index:>4}{carPlate:>12}{make:>12}{model:>9}{year:>5}{vin:>19}\
+{mileage:>8}{vin:>20}{expiry_date:>19}{status:>11}")
 
 
         datas = []
@@ -82,15 +84,28 @@ def printCar(carfile, carInsurancefile):
         else:
             carPlate, make, model, year, vin, mileage, expiry_date, status = datas[index]
 
-            print(f"\nCar plate number: {carPlate}\nMake: {make}\nModel: {model}\nYear: {year}\nVIN: {vin}\
-    \nMileage: {mileage}\nInsurance expiry date: {expiry_date}\nStatus: {status}")
+            print(f"\n{"Car plate number":23}:{carPlate}\n{"Make":23}:{make}\n{"Model":23}:{model}\n{"Year":23}:{year}\n{"VIN":23}:{vin}\
+    \n{"Mileage":23}:{mileage}\n{"Insurance expiry date":23}:{expiry_date}\n{"Status":23}:{status}")
             if status.strip() == "Active":
-                print("\nThe insurance has been active")
+                print("\nThe insurance still active")
+                print("\nBack to main menu......")
+                time.sleep(2)
             else:
-                print("\nThe insurance has been expired")
+                print("\nThe insurance has expired")
                 confirm = keyboardInput(str, "\nDo you want to renew this car insurance (y/n) ?", "Confirm must be in String")
+                while confirm != 'y' and confirm != 'n':
+                    print("Invalid Character!\n")
+                    confirm = keyboardInput(str, "Enter you choice again (y/n) ?", "Confirm must be in String")
+
                 if confirm == "y":
                     findCarInsurance(carInsurancefile, carPlate, carfile)
+
+                elif confirm == "n":
+                    print("\nBack to main menu......")
+                    time.sleep(2)
+
+                else:
+                    print("\nInvalid!")
 
     except Exception as e: 
         print("Something went wrong when we print the products:", e)
@@ -180,6 +195,8 @@ def updateCarfile(carfile, carinsurancefile, carplate):
 
 def printDriver(driverfile, driverInsurancefile):
     try:
+        print("-"*120)
+        print(" "*52,"\033[1mDRIVER INSURANCE\033[0m\n"," "*52)
         lines =None
         with open(driverfile, "rt") as filehandler:
             lines = filehandler.readlines()
@@ -187,12 +204,12 @@ def printDriver(driverfile, driverInsurancefile):
 
             driverId, drivername, driverAge, gender, license, driverExpiredate, driverstatus = line.strip().split(" | ")# strip method remove the last \n (new line) & remove spaces
             if (index == 0):
-                print(f"{"No.":<4}{driverId:<8}{drivername:<15}{driverAge:<4}{gender:<8}{license:<19}\
-{driverExpiredate:<15}{driverstatus:<10}")
-                print("=" * 100)
+                print(f"{"No.":<8}{driverId:<12}{drivername:<19}{driverAge:<8}{gender:<12}{license:<22}\
+{driverExpiredate:<19}{driverstatus:<14}")
+                print("=" * 120)
             else:
-                print(f"{index:<4}{driverId:<8}{drivername:<15}{driverAge:<4}{gender:<8}{license:<19}\
-{driverExpiredate:<15}{driverstatus:<10}")
+                print(f"{index:<8}{driverId:<12}{drivername:<19}{driverAge:<8}{gender:<12}{license:<22}\
+{driverExpiredate:<19}{driverstatus:<14}")
 
 
         datas = []
@@ -206,20 +223,28 @@ def printDriver(driverfile, driverInsurancefile):
             index  =keyboardInput(int, "Enter a number:", "Number must be in integer")
         driverId, drivername, driverAge, gender, license, driverExpiredate, driverstatus = datas[index]
 
-        print(f"\nDriver ID: {driverId}\nName: {drivername}\nAge: {driverAge}\nGender: {gender}\niLicense number: {license}\nInsurance expired date: {driverExpiredate}\
-\nInsurance status: {driverstatus}")
+        print(f"\n{"Driver ID":23}:{driverId}\n{"Name":23}:{drivername}\n{"Age":23}:{driverAge}\n{"Gender":23}:{gender}\n{"License number":23}:{license}\n{"Insurance expired date":23}:{driverExpiredate}\
+\n{"Insurance status":23}:{driverstatus}")
         
         if driverstatus.strip() == "Active":
-            print("\nThe insurance has been active")
+            print("\nThe insurance still active")
+            print("\nBack to main menu......")
+            time.sleep(2)
         else:
-            print("\nThe insurance has been expired")
+            print("\nThe insurance has expired")
             confirm = keyboardInput(str, "\nDo you want to renew this driver insurance (y/n) ?", "Confirm must be in String")
+            while confirm != 'y' and confirm != 'n':
+                    print("Invalid Character!\n")
+                    confirm = keyboardInput(str, "Enter you choice again (y/n) ?", "Confirm must be in String")
+
             if confirm == "y":
                 findDriverInsurance(driverInsurancefile, driverId, driverfile)
+            elif confirm == "n":
+                    print("\nBack to main menu......")
+                    time.sleep(2)
 
     except Exception as e: 
         print("Something went wrong when we print the products:", e)
-
 
 
 def findDriverInsurance(driverInsurancefile, driverId, driverfile):
@@ -308,10 +333,8 @@ def updateDriverfile(driverfile, driverInsurancefile, driverID):
 def chooseBokingLine(bookingfile,carinsurancefile,driverinsurancefile, claiminsurancefile):
     verify = True
     while verify:
-        # with open(bookingfile, "rt") as file:
-        #     display = file.read()
-        #     print("\nBooking Detail:")
-        #     print(display)
+
+        print(" "*52,"\033[1mCLAIM INSURANCE\033[0m"," "*52)
         print("\nBooking Detail:\n")
         readbookingfile(bookingfile)
 
@@ -331,18 +354,23 @@ def chooseBokingLine(bookingfile,carinsurancefile,driverinsurancefile, claiminsu
                 index = keyboardInput(int,"Plesase insert line number: ", "Number must be in integer")
             print("\nPlese check the detail carefully...")
             BookingID, CustomerID, CarPlate, DriverID, DriverName, BookingDate = data[index]
-            print(f"\nBooking ID: {BookingID}\nCustomer ID: {CustomerID}\nPlate No: {CarPlate}\nDriver ID: {DriverID}\nName: {DriverName}\nBooking Date: {BookingDate}")
+            print(f"\n{"Booking ID":15}: {BookingID}\n{"Customer ID":15}:{CustomerID}\n{"Plate No":15}:{CarPlate}\n{"Driver ID":15}:{DriverID}\n{"Name":15}:{DriverName}\n{"Booking Date":15}:{BookingDate}")
             confirm = keyboardInput(str, "\nDetails is true?  (y/n): ", "Please insert y or n")
+            while confirm != "y" and confirm != "n":
+                print("Invalid Character!")
+                confirm = keyboardInput(str, "\nEnter confirmation again (y/n): ", "Please insert y or n")
+
             if confirm == "y":
                 print("\nDetail Claim Amont:")
                 carClaim = claimfindCarInsurance(carinsurancefile, CarPlate)
                 driverClaim = claimfindDriverInsurance(driverinsurancefile, DriverID)
                 totalClaim = carClaim + driverClaim
                 print(f"Total Claim: {totalClaim}\n")
-            
                 totalClaimInsurance(claiminsurancefile,BookingDate, CarPlate, carClaim, DriverID, driverClaim, totalClaim)
+                print("Updating to the system.....")
+                time.sleep(2)
+                print("\nClaim Insurance successfully added.")
                 verify = False
-            #BookingID | CustomerID | CarPlate | DriverID | DriverName | BookingDate
 
         except Exception as e:
             print("Error edit product:", e)
@@ -354,11 +382,11 @@ def readbookingfile(bookingfile):
     for index, line in enumerate(booking):
         bookingID, custID, carPlate, driverID, driverName, bookingDate = line.strip().split(" | ")
         if (index == 0):
-            print(f"{"No.":<4}{bookingID:<12}{custID:<13}{carPlate:<15}{driverID:<12}{driverName:<18}{bookingDate:<15}")
-            print("=" * 85)
+            print(f"{"No.":<10}{bookingID:<18}{custID:<19}{carPlate:<21}{driverID:<18}{driverName:<22}{bookingDate:<21}")
+            print("=" * 120)
         else:
-            print(f"{index:<4}{bookingID:<12}{custID:<13}{carPlate:<15}{driverID:<12}{driverName:<18}{bookingDate:<15}")
-    print("-" * 90)
+            print(f"{index:<10}{bookingID:<18}{custID:<19}{carPlate:<21}{driverID:<18}{driverName:<22}{bookingDate:<21}")
+    print("-" * 120)
     print()
 
 def claimfindCarInsurance (carinsurancefile,CarPlate):
@@ -421,7 +449,8 @@ def printResit (claimInsurancefile):
     try:
         with open(carinsurancefile,"rt") as file:
             line = file.readlines()
-
+            print(f"\nDate: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            print("-"*120)
             print(" "*47,"\033[1mSUMMARY INSURANCE CLAIMED\033[0m"," "*47)
             print("\n"," "*45,"AEA CAR RENTAL SERVICE SDN BHD"," "*45)
             print(" "*42,"123,AEA STREET, EFG CITY,45689 HIJL"," "*42)
@@ -450,6 +479,13 @@ def printResit (claimInsurancefile):
             line = line.strip().split("|")
             net_claimed += float(line[5].strip())
         print(" "*77,f"Net total claimed:     \033[92mRM {net_claimed:,.2f}\033[0m")
+        print("-"*120)
+        print("Thank you for your bussiness!")
+        print("-"*120)
+        print("Signature:\n\n\n")
+        print("_"*30)
+        print("Name:")
+        print("Date:")
 
         print("")
         time.sleep(2)
@@ -457,7 +493,8 @@ def printResit (claimInsurancefile):
         print("Something went wrong when we read from the file", e)
 #______________________________________________________________________________#
 def reportCompany (carinsurancefile, driverinsurancefile, claiminsurancefile):
-    print('-'*20, "REPORT ON INSURANCE DEPARTMENT",'-'*20)
+    print('-'*45, "\033[1mREPORT ON INSURANCE DEPARTMENT\033[0m",'-'*45)
+    print()
     try:
         year = keyboardInput(int,"Report Year: ","Please input Year in YYYY format")
         while len(str(year)) != 4 :
@@ -544,22 +581,65 @@ def reportCompany (carinsurancefile, driverinsurancefile, claiminsurancefile):
                         totalClaims += 1
 
             #display
-            print("="*72)
-            print(f"\nReport for {targetDate.strftime('%B %Y')}")
+            # print("="*120)
+            # print(f"\nReport for year {targetDate.strftime('%Y')}:")
 
-            print(f"\n1.   Total cars with insurance(car(s)):"," "*31,f"{totalCarsWithInsurance}")
-            print(f"     - Cars with Active insurance(car(s)):"," "*28,f"{totalActiveCars}")
-            print(f"     - Cars with Inactive insurance(car(s)):"," "*26,f"{totalInactiveCar}")
-            print(f"2.   Total drivers with insurance(driver(s)):"," "*25,f"{totalDriverWithInsurance}")
-            print(f"     - Drivers with Active insurance(driver(s)):"," "*22,f"{totalActiveDriver}")
-            print(f"     - Drivers with Inactive insurance(driver(s)):"," "*20,f"{totalInactiveDriver}")
-            print(f"3.   Total insurance that need to renew its insurance(insurance(s)):"," "*2,f"{totalRenewInsuranceCar}")
-            print(f"4.   Total claims that has been made(claims):"," "*25,f"{totalClaims}")
+            # print(f"\n1.   Total cars with insurance(car(s)):"," "*31,f"{totalCarsWithInsurance}")
+            # print(f"     - Cars with Active insurance(car(s)):"," "*28,f"{totalActiveCars}")
+            # print(f"     - Cars with Inactive insurance(car(s)):"," "*26,f"{totalInactiveCar}")
+            # print(f"2.   Total drivers with insurance(driver(s)):"," "*25,f"{totalDriverWithInsurance}")
+            # print(f"     - Drivers with Active insurance(driver(s)):"," "*22,f"{totalActiveDriver}")
+            # print(f"     - Drivers with Inactive insurance(driver(s)):"," "*20,f"{totalInactiveDriver}")
+            # print(f"3.   Total insurance that need to renew its insurance(insurance(s)):"," "*2,f"{totalRenewInsuranceCar}")
+            # print(f"4.   Total claims that has been made(claims):"," "*25,f"{totalClaims}")
 
+            # Display in table
+            totalCarsWithInsurance = str(totalCarsWithInsurance)
+            totalActiveCars = str(totalActiveCars)
+            totalInactiveCar = str(totalInactiveCar)
+            totalDriverWithInsurance = str(totalDriverWithInsurance)
+            totalActiveDriver = str(totalActiveDriver)
+            totalInactiveDriver = str(totalInactiveDriver)
+            totalClaims = str(totalClaims)
+
+            print("="*120)
+            print(f"|{'Cars'.center(36)}|{'Driver'.center(36)}|{'Claim Made'.center(44)}|")
+            print("-"*75)
+            print(f"|{'Active'.center(17)}|{'Expired'.center(18)}|{'Active'.center(18)}|{'Expired'.center(17)}|{'|':>45}")
+            print("="*120)
+            print(f"|{totalActiveCars.center(17)}|{totalInactiveCar.center(17)} |{totalActiveDriver.center(17)} |{totalInactiveDriver.center(17)}|{totalClaims.center(44)}|")
+            print("-"*75)
+            print(f"|{totalCarsWithInsurance.center(36)}|{totalDriverWithInsurance.center(36)}|{"|":>45}")
+            print("-"*120)
+            
+            # Adding some details
+            print("\nDetails:")
+            print(f"1. Cars: The report shows the status of cars in the insurance system.")
+            print(f"2. There are {totalActiveCars} active car insurance policies and {totalInactiveCar} expired car insurance policies.")
+            print(f"3. Driver: The report also details the driver insurance policies.")
+            print(f"4. There are {totalActiveDriver} active driver insurance policies and {totalInactiveDriver} expired driver insurance policies.")
+            print(f"5. Claim Made: In the current year, a total of {totalClaims} claims have been made under the insurance policies.")
+
+            # Additional summary
+            # print(f"\nSummary:")
+            # print(f"The insurance department has been actively managing the policies with a total of {totalCarsWithInsurance} car insurance policies and {totalDriverWithInsurance} driver")
+            # print(f"insurance policies and {totalDriverWithInsurance} driver insurance policies.")
+            # print(f"Efforts to ensure timely renewals and addressing the claims promptly are reflected in the above statistics.")
+
+            print(f"""
+Summary:
+The insurance department has been actively managing the policies with a total of {totalCarsWithInsurance} car insurance policies 
+and {totalDriverWithInsurance} driver insurance policies. Efforts to ensure timely renewals and addressing the claims promptly 
+are reflected in the above statistics.
+    """)
+
+            time.sleep(2)
+            print()
+            print("\nBack to main menu.....")
             time.sleep(2)
             break
         else:
-            print("No record")
+            print("\033[91mNo record!\033[0m")
 
     except FileNotFoundError:
         print("Error: One or more insurance file not found")
