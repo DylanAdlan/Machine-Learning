@@ -1,0 +1,13 @@
+semi structured data
+
+[{
+    "product": "Television", 
+    "quantity":10, 
+    "price": 1455.55
+    
+},
+{   
+    "product": "Computer", 
+    "quantity":20, 
+    "price":3285.50
+}]

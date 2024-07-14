@@ -1,4 +1,4 @@
-"""
+'''"""
 video 1 filter() function
 """
 def starts_with_r(friends):
@@ -14,7 +14,7 @@ print(next(starts_with_r))
 # print(next(starts_with_r))
 # print(next(starts_with_r))
 
-
+'''
 
 """
 to work with Regular expression -> use built in package "re" atau module re
@@ -230,22 +230,230 @@ import /tmp/mymod.py
 - Add and export /tmp to PYTHONPATH and then import mymod
 
 
+#----------------------------------------------------------------
 
+idesign
 
+1.
+create pattern utk offer code
+condition - contains all vowels (aeiou)
 
+import re
 
+def checkPatternOffercode(input_user):
 
+    vowels = set(aeiou) # {'a', 'e', 'i', 'o', 'u'}
 
+    words = re.findall(r"\b\w+\b", string)
 
+    # r => akn treat baclashes as ada meaning and bukan hnya escape character
+    # \b => at first utk match dgn begin ayat tu, xspecify kna start dgn apa, tpi blh smua(letter, digit, underscore only)
+    # \w+ => \w utk [a-zA-z0-9_], ada "+" utk more that one
+    # \b => at the end utk match jgk dkat end of word 
 
+    for word in words:
+        set_word = set(word)
 
+        if vowels.issubset(set_word):
+            print("Accepted")
 
+        else:
+            print("Not Accepted")
 
+input_user = input().strip().lower().replace(" ","")
+# .strip() => remove trailing whitespace
+# .lower() => convert to lowercase
+# .replace(" ","") => remove all spaces antra string, bukan hnya yg trailing
 
+checkPatternOffercode(input_user)
 
+#---------------------------------------------------------------------------------------------
 
+3.
+Valid phone detect, to avoid spam call
+valid(condition) - start "+91", followed by 10 digits
 
+^ => menunjukkan start of ayat
+\+91 => utk match string +91, and escape meaning sign of +
+- => match the hypen("-")
+\d => mkna utk digit [0-9]
+{10} => specifiy \d kna appear 10 kali
+$ => represent end of line (ayat)
 
+import re
 
+def checkValidcall(input_user):
+    
+    pattern = r"^\+91-\d{10}$"
 
+    if re.match(pattern, input_user): # kalau input user match dgn pattern
+      return "Not a Spam Call"
+    
+    else:
+      return "Spam Call"
+    
+# example usage
+# input must in string
+input_user = input().strip()  # ada .strip() = utk remove extra spaces
+
+print(checkValidcall(input_user))
+
+#----------------------------------------------------------------------
 """
+#4.
+
+# nk encrypt message
+# message kan 2 words only
+# to encrypt, first character s1 gabung last character of s2 then second 1st s1 gabung second last character s2 and so on, yg selebih akn go to the end 
+# example = hello, hi => hiehllo
+
+import re
+
+def encryptString(word1, word2):
+    
+    word1 = re.sub(r'[^a-zA-Z]', '', word1) # ['h','e','l','l','o']
+    word2 = re.sub(r'[^a-zA-Z]', '', word2) # ['h','i']
+
+    # re.sub() => utk replace 
+    # [a-zA-Z] => nk letter shaja, kalau non-letter(digit, underscore)(0-9_) 
+    # akan replace by empty string, ''
+
+    len1 = len(word1)  #5
+    len2 = len(word2)  #2
+    encrypt_str = []
+
+    for i in range(max(len1, len2)): # 5
+        if i < len1:
+            encrypt_str.append(word1[i])
+        if i < len2:
+            encrypt_str.append(word2[len2-1-i]) # ambik start dri belakang
+
+    return "".join(encrypt_str) # return in string (from list to string after join)
+
+# example usage
+word1 = input().strip()
+word2 = input().strip()
+print(encryptString(word1, word2))
+
+#----------------------------------------------------------------------------
+
+# 5. Income Tax Validation
+
+# check PAN 
+# condition - 10 digits (5 first (letters), next 4 (numerals), last(letter), MUST UPPERCASE)
+
+import re
+
+def checkPAN(input_user):
+    
+    pattern = r"^[A-Z]{5}\d{4}[A-Z]$"
+
+    if re.match(pattern, input_user):
+        return "Valid PAN Number"
+    
+    else:
+        return "Invalid PAN Number"
+    
+#example usage
+input_user = input().strip()
+print(checkPAN(input_user))
+
+#---------------------------------------------------------
+# iaccess
+
+1.
+
+import re
+
+def findNouns(input_user):
+    pattern = r"\b[A-Z][a-zA-Z.]*\b"
+
+    # [] = define character class
+    # \b[A-Z] = start with uppercase character
+    # [a-zA-Z.]* =  followed by any character (lowercase, uppercase or period(.)) 
+    # * = zero or more (ada pun xpe, xde pun xpe)
+    # tpi mmg kna start character with uppercase char
+    # dia akn cari word by word 
+
+
+    nouns = re.findall(pattern, input_user)
+
+    for i in nouns:
+        print(i)
+
+
+# example usage
+input_user = input()
+findNouns(input_user)
+
+#------------------------------------------------------
+
+# 2. Ceaser Cipher Encryption
+
+import re
+
+def shift_char():
+
+    text = input()
+    next_shift = int(input())
+
+    # initialize empty string utk store encrypt result
+    encrpyt_text = ""
+
+    for char in text:
+        # convert to ascii value sbb kita xleh shift to next char guna alphabet 
+        shifted_char = ord(char) + next_shift
+        if shifted_char > 127:
+            return "invalid"
+        else:
+            encrypt_char = chr(shifted_char)
+            # masukkan encrypt_char dlm empty string yg kita initialize
+            encrpyt_text += encrypt_char
+
+    return encrpyt_text
+
+# example usage
+print(shift_char())
+
+
+
+
+
+
+
+
+
+
+
+
+
+text = "amphisoft"
+size = 3
+
+result = re.sub(r"[a-zA-Z]", )
+
+
+
+
+
+    
+    
+    
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

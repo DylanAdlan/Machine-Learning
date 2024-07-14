@@ -308,33 +308,86 @@ print(person)
 		
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 #4.
+# One-to-Many Relationship [Bidirectional]
 
 class City:
 	
-    def __init__(self, name, state):
-        self.__name = name
-        self.__state = state
-		
-    def __str__(self):
-		return f"{self.__name},{self.__state}"
-	
-class State:
-	def __init__(self, name, city_list):
+	def __init__(self,name,state) :
 		self.__name = name
-		self.__citylist = city_list
+		self.__state = state
 		
-    def __str__(self):
-        
+	def __str__(self):
+		return f"{self.__name} is in state {self.__state}"
+		#Fill your code
+		
+
+
+class State:
+	
+	def __init__(self,name,city_list) :
+		self.__name = name
+		self.__city_list = city_list
+		
+    @property
+	def city_list(self) :
+		return self.__city_list
+		#Fill your code
+		
+    @setter
+	def city_list(self,city_list) :
+		return self.__city_list
+		#Fill your code
+		
+    @property
+	def name(self) :
+		return self.__name
+		#Fill your code
+		
+	def __str__(self) :
+		return f"{self.__name} has {self.__city_list} cities"
+		#Fill your code
+	
+	
+from City import City
+from State import State
+
+state_list = []
+state_list.append(State("Tamilnadu",[]))
+state_list.append(State("Andhra",[]))
+state_list.append(State("Karnataka",[]))
+state_list.append(State("Kerala",[]))
 
 print("Enter City Details")
-city = input("Enter city name\n")
-state = input("Enter state name\n")
-choice = 
-city_detail1 = City(city, state)
-state_detail = State(name, city_detail1)
+city_created_list = []
+choice = "Yes"
+while choice == "Yes" :
+    city_name = input("Enter city name\n")
+    state_name = input("Enter state name\n")
+    state_found_flag = 0
+    for state in state_list :
+        if state_name == state.name :
+            city = City(city_name, state)
+            state.city_list.append(city)
+            city_created_list.append(city)
+            state_found_flag = 1
+    if state_found_flag == 0 :
+        state = State(state_name,[])
+        state_list.append(state)
+        city = City(city_name, state)
+        city_created_list.append(city)
+        state.city_list.append(city)
+    choice = input("Do you want to add another city? Type Yes / No\n")
 
-	
-		
+print("\nCity Details\n")
+for city in city_created_list :
+    print(city)
+
+print("\nState Details\n")	
+for state in state_list :
+    print(state)
+
+
+Machang = City("Machang", "Kelantan")
 	
 
 
