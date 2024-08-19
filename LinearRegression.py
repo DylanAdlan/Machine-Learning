@@ -93,10 +93,140 @@ For a multiple regression model, SST = 200 and SSE = 50. The multiple coefficien
 10.R2 is the mathematical notation for:
 - The Co-efficient of Determination
 
+#---------------------------------------------------------
+#cth cari covariance using numpy library
 
+# 1
 
+import numpy as np
 
+# Example data
+X = [10, 15, 20, 25, 30]
+Y = [5, 10, 15, 20, 25]
 
+# Calculate covariance
+covariance = np.cov(X, Y)[0, 1]
+print(covariance)
 
 
 '''
+'''# idesign
+
+#2.
+
+import numpy as np
+
+size = int(input())
+
+x = []
+y = []
+
+for i in range(size):
+    value_x, value_y = input().split(",")
+    x.append(int(value_x))
+    y.append(int(value_y))
+
+correlation_coef = np.corrcoef(x,y)[0,1]
+
+print(f"Correlation Coefficient: {correlation_coef:.2f}")
+'''
+#3.
+
+# import numpy as np
+
+# number = input().split()
+# number = list(map(int, number))
+# numbers = np.array(number)
+
+# mean_num = np.mean(numbers)
+# print(f"{mean_num:.1f}")
+
+# #4
+
+# import numpy as np
+
+# num1 = input().split()
+# num2 = input().split()
+
+# num1 = list(map(int, num1))
+# num2 = list(map(int, num2))
+
+
+# correlation = np.corrcoef(num1, num2)[0,1]
+# print(round(correlation, 2))
+
+
+#5.
+import numpy as np
+
+# input 2 list of numbers
+x = input().split()
+y = input().split()
+
+# make them into integer
+x = list(map(float, x))
+y = list(map(float, y))
+
+# find mean
+mean_x = np.mean(x)
+mean_y = np.mean(y)
+
+# find standard deviation
+std_x = np.std(x)
+std_y = np.std(y)
+
+# find correlation
+correlation = np.corrcoef(x,y)[0,1]
+
+# find slope
+slope = correlation * (std_y / std_x)
+
+
+# find intercept
+intercept = mean_y - (slope * mean_x)
+
+# execute all
+print("Mean of x =", mean_x)
+print("Mean of y =", mean_y)
+print(f"SD of x = {round(std_x, 3)}")
+print(f"SD of y = {round(std_y, 3)}")
+print(f"Correlation of x and y = {round(correlation, 3)}")
+print(f"Scope = {round(slope,3)}")
+print(f"Intercept = {round(intercept, 3)}")
+
+#------------------------------------------------
+
+# iaccess
+
+#1.
+
+# to find a r, correlation coefficient by covariance and variance is covariance / (square root(var x * var y))
+# import library
+import numpy as np
+
+covariance = float(input())
+
+var_x = float(input())
+var_y = float(input())
+
+coefficient = covariance /( (var_x * var_y)**(1/2))
+print(round(coefficient, 3))
+
+# 2.
+
+import numpy as np
+
+number = input().split()
+
+
+numbers = list(map(int, number))
+numbers = np.array(numbers)
+
+# find standard deviation using 
+std_dev = np.std(numbers)
+print(round(std_dev, 2))
+
+
+
+
+

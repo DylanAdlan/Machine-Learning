@@ -92,19 +92,106 @@ make a bar chart using Matplotlib?
 - The autopct parameter allows us to display the percentage value using the Python string formatting. (True)
 
 
-
-
-
-
-
-
-
-
-
-
 """
-import matplotlib.pyplot as ply
+import matplotlib.pyplot as plt
+import numpy as np
+
+ypoints = np.array([3, 8, 1, 10])
+
+plt.plot(ypoints, linestyle = 'dashed')
+plt.show()
+
+
 plt.style.use('classic')
 fig = plt.figure()
 ax = plt.axes()
 
+# video 1
+
+
+'''
+6.
+
+7.
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+tips = sns.load_dataset('tips', cache=True, data_home='\temp')
+
+
+# plot histogram
+sns.histplot(data= tips, x = "total_bill", kde=True)
+# kde(Kernel Density estimate) = the curve on the histogram (to represent smoothed estimate of data's distribution)
+
+plt.savefig('splot2.png')
+
+
+8.
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+data = sns.load_dataset('tips', cache=True, data_home='\temp')
+
+sns.countplot(data=data, x="day", hue="sex", palette='magma')
+# save plot to a file
+plt.savefig('splot6.png')
+
+
+
+'''
+# iaccess
+
+'''
+1.# iacess
+#1.
+
+# import module
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+import pandas as pd
+
+# read data
+data = pd.read_csv("Medals.csv")
+
+team_name = data['Team']
+total_medal = data['Total']
+
+#create plot
+plt.figure()
+plt.plot(team_name, total_medal, linestyle="solid")
+
+# set labels and title
+plt.xlabel('Team Name')
+plt.ylabel('Total Number of Medals')
+plt.title('Team-wise Total Medal Data')
+plt.savefig('plot1.png')
+
+
+
+2.
+
+# import libraries
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# load dataset
+data = sns.load_dataset('tips', cache=True, data_home='\temp')
+
+# intialize color palette for the graph
+palette = {"Thur": "#1f77b4", "Fri": "#ff7f0e", "Sat": "#2ca02c", "Sun": "#d62728"}
+
+# Customize the appearance of outliers
+flierprops = dict(marker='D', markerfacecolor='grey', markeredgecolor='black')
+
+# create plot( boxplot)
+sns.boxplot(data=data, x="day", y="total_bill", palette=palette, flierprops=flierprops)
+
+# save the plot
+plt.savefig('splot8.png')
+
+
+'''
